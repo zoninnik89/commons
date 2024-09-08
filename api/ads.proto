@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "github.com/zoninnik89/commons/api";
+
+package api;
+
+message Ad {
+    string ID = 1;
+    string advertiserID = 2;
+    string title = 3;
+    string adURL = 4;
+}
+
+service AdsService {
+    rpc CreateAd(CreateAdRequest) returns (Ad);
+}
+
+message CreateAdRequest {
+    string AdId = 1;
+    string AdTitle = 2;
+}
