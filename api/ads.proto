@@ -13,9 +13,17 @@ message Ad {
 
 service AdsService {
     rpc CreateAd(CreateAdRequest) returns (Ad);
+    rpc GetAD(GetAdRequest) returns (Ad);
 }
 
 message CreateAdRequest {
-    string AdId = 1;
-    string AdTitle = 2;
+    string ID = 1;
+    string advertiserID = 2;
+    string title = 3;
+    string adURL = 4;
+}
+
+message GetAdRequest {
+    string advertiserID = 1;
+    string adID = 2
 }
