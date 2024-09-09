@@ -6,9 +6,9 @@ package api;
 
 message Ad {
     string ID = 1;
-    string advertiserID = 2;
-    string title = 3;
-    string adURL = 4;
+    string AdvertiserID = 2;
+    string Title = 3;
+    string AdURL = 4;
 }
 
 service AdsService {
@@ -18,12 +18,12 @@ service AdsService {
 
 message CreateAdRequest {
     string ID = 1;
-    string advertiserID = 2;
-    string title = 3;
-    string adURL = 4;
+    string AdvertiserID = 2;
+    string Title = 3;
+    string AdURL = 4;
 }
 
 message GetAdRequest {
-    string advertiserID = 1;
-    string adID = 2;
+    string AdvertiserID = 1;
+    string AdID = 2;
 }
