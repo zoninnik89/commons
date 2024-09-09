@@ -25,5 +25,5 @@ message CreateAdRequest {
 
 message GetAdRequest {
     string advertiserID = 1;
-    string adID = 2
+    string adID = 2;
 }
