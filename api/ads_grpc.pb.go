@@ -157,3 +157,143 @@ var AdsService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "api/ads.proto",
 }
+
+const (
+	AggregatorService_SendClick_FullMethodName       = "/api.AggregatorService/SendClick"
+	AggregatorService_GetClickCounter_FullMethodName = "/api.AggregatorService/GetClickCounter"
+)
+
+// AggregatorServiceClient is the client API for AggregatorService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type AggregatorServiceClient interface {
+	SendClick(ctx context.Context, in *SendClickRequest, opts ...grpc.CallOption) (*Click, error)
+	GetClickCounter(ctx context.Context, in *GetClicksCounterRequest, opts ...grpc.CallOption) (*ClickCounter, error)
+}
+
+type aggregatorServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAggregatorServiceClient(cc grpc.ClientConnInterface) AggregatorServiceClient {
+	return &aggregatorServiceClient{cc}
+}
+
+func (c *aggregatorServiceClient) SendClick(ctx context.Context, in *SendClickRequest, opts ...grpc.CallOption) (*Click, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Click)
+	err := c.cc.Invoke(ctx, AggregatorService_SendClick_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aggregatorServiceClient) GetClickCounter(ctx context.Context, in *GetClicksCounterRequest, opts ...grpc.CallOption) (*ClickCounter, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClickCounter)
+	err := c.cc.Invoke(ctx, AggregatorService_GetClickCounter_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AggregatorServiceServer is the server API for AggregatorService service.
+// All implementations must embed UnimplementedAggregatorServiceServer
+// for forward compatibility.
+type AggregatorServiceServer interface {
+	SendClick(context.Context, *SendClickRequest) (*Click, error)
+	GetClickCounter(context.Context, *GetClicksCounterRequest) (*ClickCounter, error)
+	mustEmbedUnimplementedAggregatorServiceServer()
+}
+
+// UnimplementedAggregatorServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedAggregatorServiceServer struct{}
+
+func (UnimplementedAggregatorServiceServer) SendClick(context.Context, *SendClickRequest) (*Click, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendClick not implemented")
+}
+func (UnimplementedAggregatorServiceServer) GetClickCounter(context.Context, *GetClicksCounterRequest) (*ClickCounter, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClickCounter not implemented")
+}
+func (UnimplementedAggregatorServiceServer) mustEmbedUnimplementedAggregatorServiceServer() {}
+func (UnimplementedAggregatorServiceServer) testEmbeddedByValue()                           {}
+
+// UnsafeAggregatorServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AggregatorServiceServer will
+// result in compilation errors.
+type UnsafeAggregatorServiceServer interface {
+	mustEmbedUnimplementedAggregatorServiceServer()
+}
+
+func RegisterAggregatorServiceServer(s grpc.ServiceRegistrar, srv AggregatorServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAggregatorServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&AggregatorService_ServiceDesc, srv)
+}
+
+func _AggregatorService_SendClick_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendClickRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AggregatorServiceServer).SendClick(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AggregatorService_SendClick_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AggregatorServiceServer).SendClick(ctx, req.(*SendClickRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AggregatorService_GetClickCounter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClicksCounterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AggregatorServiceServer).GetClickCounter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AggregatorService_GetClickCounter_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AggregatorServiceServer).GetClickCounter(ctx, req.(*GetClicksCounterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AggregatorService_ServiceDesc is the grpc.ServiceDesc for AggregatorService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AggregatorService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.AggregatorService",
+	HandlerType: (*AggregatorServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SendClick",
+			Handler:    _AggregatorService_SendClick_Handler,
+		},
+		{
+			MethodName: "GetClickCounter",
+			Handler:    _AggregatorService_GetClickCounter_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "api/ads.proto",
+}
