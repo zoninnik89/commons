@@ -4,6 +4,8 @@ option go_package = "github.com/zoninnik89/commons/api";
 
 package api;
 
+// Ads service
+
 message Ad {
     string ID = 1;
     string AdvertiserID = 2;
@@ -25,4 +27,31 @@ message CreateAdRequest {
 message GetAdRequest {
     string AdvertiserID = 1;
     string AdID = 2;
+}
+
+// Aggregator service
+
+service AggregatorService {
+    rpc SendClick(SendClickRequest) returns (Click);
+    rpc GetClickCounter(GetClicksCounterRequest) returns (ClickCounter);
+}
+
+message Click {
+    string clickID = 1;
+    int64 timestamp = 2;
+    bool isAccepted = 3;
+}
+
+message ClickCounter {
+    string adID = 1;
+    int64 totalClicks = 2;
+}
+
+message SendClickRequest {
+    string adID = 1;
+    string impressionID = 2;
+}
+
+message GetClicksCounterRequest {
+    string adId = 1;
 }
