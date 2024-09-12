@@ -38,13 +38,13 @@ service AggregatorService {
 
 message Click {
     string clickID = 1;
-    int64 timestamp = 2;
+    int32 timestamp = 2;
     bool isAccepted = 3;
 }
 
 message ClickCounter {
     string adID = 1;
-    int64 totalClicks = 2;
+    int32 totalClicks = 2;
 }
 
 message SendClickRequest {
