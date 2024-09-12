@@ -37,21 +37,22 @@ service AggregatorService {
 }
 
 message Click {
-    string clickID = 1;
-    int32 timestamp = 2;
-    bool isAccepted = 3;
+    string ClickID = 1;
+    string AdID = 2;
+    int32 Timestamp = 3;
+    bool IsAccepted = 4;
 }
 
 message ClickCounter {
-    string adID = 1;
-    int32 totalClicks = 2;
+    string AdID = 1;
+    int32 TotalClicks = 2;
 }
 
 message SendClickRequest {
-    string adID = 1;
-    string impressionID = 2;
+    string AdID = 1;
+    string ImpressionID = 2;
 }
 
 message GetClicksCounterRequest {
-    string adId = 1;
+    string AdId = 1;
 }
