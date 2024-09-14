@@ -33,7 +33,6 @@ message GetAdRequest {
 
 message CheckAdIsValidRequest {
     string AdId = 1;
-    string AdvertiserID = 2;
     string ImpressionId = 3;
 }
 
