@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdsService_CreateAd_FullMethodName = "/api.AdsService/CreateAd"
-	AdsService_GetAD_FullMethodName    = "/api.AdsService/GetAD"
+	AdsService_CreateAd_FullMethodName       = "/api.AdsService/CreateAd"
+	AdsService_GetAD_FullMethodName          = "/api.AdsService/GetAD"
+	AdsService_CheckAdIsValid_FullMethodName = "/api.AdsService/CheckAdIsValid"
 )
 
 // AdsServiceClient is the client API for AdsService service.
@@ -29,6 +30,7 @@ const (
 type AdsServiceClient interface {
 	CreateAd(ctx context.Context, in *CreateAdRequest, opts ...grpc.CallOption) (*Ad, error)
 	GetAD(ctx context.Context, in *GetAdRequest, opts ...grpc.CallOption) (*Ad, error)
+	CheckAdIsValid(ctx context.Context, in *CheckAdIsValidRequest, opts ...grpc.CallOption) (*AdValidity, error)
 }
 
 type adsServiceClient struct {
@@ -59,12 +61,23 @@ func (c *adsServiceClient) GetAD(ctx context.Context, in *GetAdRequest, opts ...
 	return out, nil
 }
 
+func (c *adsServiceClient) CheckAdIsValid(ctx context.Context, in *CheckAdIsValidRequest, opts ...grpc.CallOption) (*AdValidity, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdValidity)
+	err := c.cc.Invoke(ctx, AdsService_CheckAdIsValid_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdsServiceServer is the server API for AdsService service.
 // All implementations must embed UnimplementedAdsServiceServer
 // for forward compatibility.
 type AdsServiceServer interface {
 	CreateAd(context.Context, *CreateAdRequest) (*Ad, error)
 	GetAD(context.Context, *GetAdRequest) (*Ad, error)
+	CheckAdIsValid(context.Context, *CheckAdIsValidRequest) (*AdValidity, error)
 	mustEmbedUnimplementedAdsServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedAdsServiceServer) CreateAd(context.Context, *CreateAdRequest)
 }
 func (UnimplementedAdsServiceServer) GetAD(context.Context, *GetAdRequest) (*Ad, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAD not implemented")
+}
+func (UnimplementedAdsServiceServer) CheckAdIsValid(context.Context, *CheckAdIsValidRequest) (*AdValidity, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAdIsValid not implemented")
 }
 func (UnimplementedAdsServiceServer) mustEmbedUnimplementedAdsServiceServer() {}
 func (UnimplementedAdsServiceServer) testEmbeddedByValue()                    {}
@@ -138,6 +154,24 @@ func _AdsService_GetAD_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdsService_CheckAdIsValid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAdIsValidRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdsServiceServer).CheckAdIsValid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdsService_CheckAdIsValid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdsServiceServer).CheckAdIsValid(ctx, req.(*CheckAdIsValidRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdsService_ServiceDesc is the grpc.ServiceDesc for AdsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var AdsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAD",
 			Handler:    _AdsService_GetAD_Handler,
+		},
+		{
+			MethodName: "CheckAdIsValid",
+			Handler:    _AdsService_CheckAdIsValid_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

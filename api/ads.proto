@@ -7,7 +7,7 @@ package api;
 // Ads service
 
 message Ad {
-    string ID = 1;
+    string AdID = 1;
     string AdvertiserID = 2;
     string Title = 3;
     string AdURL = 4;
@@ -17,6 +17,7 @@ message Ad {
 service AdsService {
     rpc CreateAd(CreateAdRequest) returns (Ad);
     rpc GetAD(GetAdRequest) returns (Ad);
+    rpc CheckAdIsValid(CheckAdIsValidRequest) returns (AdValidity);
 }
 
 message CreateAdRequest {
@@ -28,6 +29,16 @@ message CreateAdRequest {
 message GetAdRequest {
     string AdvertiserID = 1;
     string AdID = 2;
+}
+
+message CheckAdIsValidRequest {
+    string AdId = 1;
+    string AdvertiserID = 2;
+    string ImpressionId = 3;
+}
+
+message AdValidity {
+    bool Valid = 1;
 }
 
 // Aggregator service
