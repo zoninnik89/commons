@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AdsService_CreateAd_FullMethodName       = "/api.AdsService/CreateAd"
-	AdsService_GetAD_FullMethodName          = "/api.AdsService/GetAD"
+	AdsService_GetAd_FullMethodName          = "/api.AdsService/GetAd"
 	AdsService_CheckAdIsValid_FullMethodName = "/api.AdsService/CheckAdIsValid"
 )
 
@@ -29,7 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdsServiceClient interface {
 	CreateAd(ctx context.Context, in *CreateAdRequest, opts ...grpc.CallOption) (*Ad, error)
-	GetAD(ctx context.Context, in *GetAdRequest, opts ...grpc.CallOption) (*Ad, error)
+	GetAd(ctx context.Context, in *GetAdRequest, opts ...grpc.CallOption) (*Ad, error)
 	CheckAdIsValid(ctx context.Context, in *CheckAdIsValidRequest, opts ...grpc.CallOption) (*AdValidity, error)
 }
 
@@ -51,10 +51,10 @@ func (c *adsServiceClient) CreateAd(ctx context.Context, in *CreateAdRequest, op
 	return out, nil
 }
 
-func (c *adsServiceClient) GetAD(ctx context.Context, in *GetAdRequest, opts ...grpc.CallOption) (*Ad, error) {
+func (c *adsServiceClient) GetAd(ctx context.Context, in *GetAdRequest, opts ...grpc.CallOption) (*Ad, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Ad)
-	err := c.cc.Invoke(ctx, AdsService_GetAD_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AdsService_GetAd_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (c *adsServiceClient) CheckAdIsValid(ctx context.Context, in *CheckAdIsVali
 // for forward compatibility.
 type AdsServiceServer interface {
 	CreateAd(context.Context, *CreateAdRequest) (*Ad, error)
-	GetAD(context.Context, *GetAdRequest) (*Ad, error)
+	GetAd(context.Context, *GetAdRequest) (*Ad, error)
 	CheckAdIsValid(context.Context, *CheckAdIsValidRequest) (*AdValidity, error)
 	mustEmbedUnimplementedAdsServiceServer()
 }
@@ -91,8 +91,8 @@ type UnimplementedAdsServiceServer struct{}
 func (UnimplementedAdsServiceServer) CreateAd(context.Context, *CreateAdRequest) (*Ad, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAd not implemented")
 }
-func (UnimplementedAdsServiceServer) GetAD(context.Context, *GetAdRequest) (*Ad, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAD not implemented")
+func (UnimplementedAdsServiceServer) GetAd(context.Context, *GetAdRequest) (*Ad, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAd not implemented")
 }
 func (UnimplementedAdsServiceServer) CheckAdIsValid(context.Context, *CheckAdIsValidRequest) (*AdValidity, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAdIsValid not implemented")
@@ -136,20 +136,20 @@ func _AdsService_CreateAd_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdsService_GetAD_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AdsService_GetAd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdsServiceServer).GetAD(ctx, in)
+		return srv.(AdsServiceServer).GetAd(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdsService_GetAD_FullMethodName,
+		FullMethod: AdsService_GetAd_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdsServiceServer).GetAD(ctx, req.(*GetAdRequest))
+		return srv.(AdsServiceServer).GetAd(ctx, req.(*GetAdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -184,8 +184,8 @@ var AdsService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdsService_CreateAd_Handler,
 		},
 		{
-			MethodName: "GetAD",
-			Handler:    _AdsService_GetAD_Handler,
+			MethodName: "GetAd",
+			Handler:    _AdsService_GetAd_Handler,
 		},
 		{
 			MethodName: "CheckAdIsValid",

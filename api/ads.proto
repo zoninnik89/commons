@@ -16,7 +16,7 @@ message Ad {
 
 service AdsService {
     rpc CreateAd(CreateAdRequest) returns (Ad);
-    rpc GetAD(GetAdRequest) returns (Ad);
+    rpc GetAd(GetAdRequest) returns (Ad);
     rpc CheckAdIsValid(CheckAdIsValidRequest) returns (AdValidity);
 }
 
