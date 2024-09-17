@@ -17,7 +17,6 @@ message Ad {
 service AdsService {
     rpc CreateAd(CreateAdRequest) returns (Ad);
     rpc GetAd(GetAdRequest) returns (Ad);
-    rpc CheckAdIsValid(CheckAdIsValidRequest) returns (AdValidity);
 }
 
 message CreateAdRequest {
@@ -29,15 +28,6 @@ message CreateAdRequest {
 message GetAdRequest {
     string AdvertiserID = 1;
     string AdID = 2;
-}
-
-message CheckAdIsValidRequest {
-    string AdId = 1;
-    string ImpressionId = 3;
-}
-
-message AdValidity {
-    bool Valid = 1;
 }
 
 // Aggregator service
