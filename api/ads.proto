@@ -11,7 +11,7 @@ message Ad {
     string AdvertiserID = 2;
     string Title = 3;
     string AdURL = 4;
-    string ImpressionId = 5;
+    string ImpressionID = 5;
 }
 
 service AdsService {
